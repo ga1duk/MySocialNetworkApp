@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -12,14 +14,16 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"https://netomedia.ru"'
+        }
+        debug {
+            buildConfigField "String", "BASE_URL", '"https://netomedia.ru"'
         }
     }
     compileOptions {
@@ -28,10 +32,15 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
     buildFeatures {
         viewBinding true
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -44,8 +53,8 @@ dependencies {
     def retrofit_version = "2.9.0"
     def okhttplogging_version = "4.10.0"
     def gsonconverter_version = "2.9.0"
-
     def coroutines_version = "1.6.0"
+    def lifecycle_version = "2.5.1"
 
 //    Standard libraries
     implementation "androidx.core:core-ktx:$core_version"
@@ -58,8 +67,13 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttplogging_version"
     implementation "com.squareup.retrofit2:converter-gson:$gsonconverter_version"
 
-//  Multithreading
+//    Multithreading
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+//    MVVM
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+//    Dependency Injection
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 }
