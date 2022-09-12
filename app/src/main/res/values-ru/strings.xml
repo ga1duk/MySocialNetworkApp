@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MySocialNetworkApp</string>
+    <string name="description_post_author_avatar">Аватар автора поста</string>
+</resources>

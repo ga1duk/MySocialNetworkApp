@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.company.mysocialnetworkapp.databinding.CardPostBinding
 import com.company.mysocialnetworkapp.dto.Post
 
@@ -22,6 +23,11 @@ class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
 class PostsViewHolder(private val binding: CardPostBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.tvAuthor.text = post.author
+
+        Glide.with(binding.postAvatar)
+            .load(post.authorAvatar)
+            .timeout(10_000)
+            .into(binding.postAvatar)
     }
 }
 
