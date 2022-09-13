@@ -22,12 +22,15 @@ class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
 
 class PostsViewHolder(private val binding: CardPostBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
-        binding.tvAuthor.text = post.author
 
         Glide.with(binding.postAvatar)
             .load(post.authorAvatar)
+            .circleCrop()
             .timeout(10_000)
             .into(binding.postAvatar)
+
+        binding.tvAuthor.text = post.author
+        binding.tvContent.text = post.content
     }
 }
 
