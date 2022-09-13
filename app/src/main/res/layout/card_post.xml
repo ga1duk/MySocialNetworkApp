@@ -24,12 +24,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/common_spacing"
+            android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/post_avatar"
             app:layout_constraintTop_toTopOf="@id/post_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="@sample/posts.json/data/author" />
 
         <TextView

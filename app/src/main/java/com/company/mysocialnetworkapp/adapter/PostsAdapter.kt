@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.company.mysocialnetworkapp.R
 import com.company.mysocialnetworkapp.databinding.CardPostBinding
 import com.company.mysocialnetworkapp.dto.Post
+import com.company.mysocialnetworkapp.util.ImageLoader
 
 class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
@@ -20,14 +21,14 @@ class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
     }
 }
 
-class PostsViewHolder(private val binding: CardPostBinding) : RecyclerView.ViewHolder(binding.root) {
+class PostsViewHolder(private val binding: CardPostBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
-
-        Glide.with(binding.postAvatar)
-            .load(post.authorAvatar)
-            .circleCrop()
-            .timeout(10_000)
-            .into(binding.postAvatar)
+        if (post.authorAvatar == null) {
+            ImageLoader.load(view = binding.postAvatar, resId = R.drawable.default_avatar)
+        } else {
+            ImageLoader.load(view = binding.postAvatar, path = post.authorAvatar)
+        }
 
         binding.tvAuthor.text = post.author
         binding.tvContent.text = post.content
@@ -36,7 +37,7 @@ class PostsViewHolder(private val binding: CardPostBinding) : RecyclerView.ViewH
 
 class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-       return oldItem.id == newItem.id
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
