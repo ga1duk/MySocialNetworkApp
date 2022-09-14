@@ -9,6 +9,8 @@ import com.company.mysocialnetworkapp.R
 import com.company.mysocialnetworkapp.databinding.CardPostBinding
 import com.company.mysocialnetworkapp.dto.Post
 import com.company.mysocialnetworkapp.util.ImageLoader
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
@@ -25,13 +27,20 @@ class PostsViewHolder(private val binding: CardPostBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         if (post.authorAvatar == null) {
-            ImageLoader.load(view = binding.postAvatar, resId = R.drawable.default_avatar)
+            ImageLoader.load(view = binding.ivPostAvatar, resId = R.drawable.default_avatar)
         } else {
-            ImageLoader.load(view = binding.postAvatar, path = post.authorAvatar)
+            ImageLoader.load(view = binding.ivPostAvatar, path = post.authorAvatar)
         }
 
         binding.tvAuthor.text = post.author
         binding.tvContent.text = post.content
+
+        val dateString = post.published
+        val currentFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+        val date = currentFormat.parse(dateString)
+        val targetFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val formattedDate = date?.let { targetFormat.format(it) }
+        binding.tvPublished.text = formattedDate
     }
 }
 
