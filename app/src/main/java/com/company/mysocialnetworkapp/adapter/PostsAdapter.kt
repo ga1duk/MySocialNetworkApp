@@ -1,16 +1,19 @@
 package com.company.mysocialnetworkapp.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.company.mysocialnetworkapp.R
 import com.company.mysocialnetworkapp.databinding.CardPostBinding
+import com.company.mysocialnetworkapp.dto.AttachmentType
 import com.company.mysocialnetworkapp.dto.Post
 import com.company.mysocialnetworkapp.util.ImageLoader
-import java.text.SimpleDateFormat
-import java.util.*
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
@@ -18,6 +21,7 @@ class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
         return PostsViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: PostsViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -25,22 +29,33 @@ class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
 
 class PostsViewHolder(private val binding: CardPostBinding) :
     RecyclerView.ViewHolder(binding.root) {
+    @RequiresApi(Build.VERSION_CODES.O)
     fun bind(post: Post) {
         if (post.authorAvatar == null) {
-            ImageLoader.load(view = binding.ivPostAvatar, resId = R.drawable.default_avatar)
+            ImageLoader.loadRoundedImage(
+                view = binding.ivPostAvatar,
+                resId = R.drawable.default_avatar
+            )
         } else {
-            ImageLoader.load(view = binding.ivPostAvatar, path = post.authorAvatar)
+            ImageLoader.loadRoundedImage(view = binding.ivPostAvatar, path = post.authorAvatar)
         }
 
         binding.tvAuthor.text = post.author
+
+        val postPublishDate = post.published
+        val odt = OffsetDateTime.parse(postPublishDate)
+        val postPublishDateFormatted = odt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+        binding.tvPublished.text = postPublishDateFormatted
+
         binding.tvContent.text = post.content
 
-        val dateString = post.published
-        val currentFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
-        val date = currentFormat.parse(dateString)
-        val targetFormat = SimpleDateFormat("dd.MM.yyyy HH:mm")
-        val formattedDate = date?.let { targetFormat.format(it) }
-        binding.tvPublished.text = formattedDate
+        if (post.attachment != null) {
+            if (post.attachment.type == AttachmentType.IMAGE) {
+                ImageLoader.loadImage(view = binding.ivAttachment, path = post.attachment.url)
+            }
+        } else {
+            ImageLoader.loadImage(view = binding.ivAttachment, path = "")
+        }
     }
 }
 

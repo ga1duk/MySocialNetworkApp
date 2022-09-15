@@ -7,14 +7,32 @@ import androidx.annotation.RawRes
 import com.bumptech.glide.Glide
 
 object ImageLoader {
-    fun load(
-        view: ImageView,
-        @Nullable path: String? = null,
-        @RawRes @DrawableRes @Nullable resId: Int? = null
-    ) {
-        val imageSource = path ?: resId
+
+    fun loadImage(view: ImageView, path: String) {
         Glide.with(view)
-            .load(imageSource)
+            .load(path)
+            .timeout(10_000)
+            .into(view)
+    }
+
+    fun loadImage(view: ImageView, @RawRes @DrawableRes @Nullable resId: Int) {
+        Glide.with(view)
+            .load(resId)
+            .timeout(10_000)
+            .into(view)
+    }
+
+    fun loadRoundedImage(view: ImageView, path: String) {
+        Glide.with(view)
+            .load(path)
+            .circleCrop()
+            .timeout(10_000)
+            .into(view)
+    }
+
+    fun loadRoundedImage(view: ImageView, @RawRes @DrawableRes @Nullable resId: Int) {
+        Glide.with(view)
+            .load(resId)
             .circleCrop()
             .timeout(10_000)
             .into(view)
