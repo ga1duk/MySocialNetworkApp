@@ -67,8 +67,9 @@
                 android:lineSpacingMultiplier="1.5"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@id/iv_attachment"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_post_avatar"
                 tools:text="@sample/posts.json/data/content" />
 
@@ -80,6 +81,66 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/extra_large_spacing"
+                android:background="#EBEBEB"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_attachment" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_like"
+                style="@style/Widget.AppTheme.LikeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:checkable="true"
+                android:contentDescription="@string/description_post_like"
+                android:text="@string/button_like_text"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/reaction_buttons_text_size"
+                app:icon="@drawable/ic_like_24"
+                app:iconGravity="top"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator"
+                tools:checked="@sample/posts.json/data/likedByMe" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_share"
+                style="@style/Widget.AppTheme.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:checkable="true"
+                android:contentDescription="@string/description_post_share"
+                android:text="@string/button_share_text"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/reaction_buttons_text_size"
+                app:icon="@drawable/ic_share_24"
+                app:iconGravity="top"
+                app:layout_constraintEnd_toStartOf="@id/btn_send"
+                app:layout_constraintStart_toEndOf="@id/btn_like"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_send"
+                style="@style/Widget.AppTheme.IconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_spacing"
+                android:checkable="true"
+                android:contentDescription="@string/description_post_send"
+                android:text="@string/button_send_text"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/reaction_buttons_text_size"
+                app:icon="@drawable/ic_send_24"
+                app:iconGravity="top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separator" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

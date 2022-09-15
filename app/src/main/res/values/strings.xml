@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">MySocialNetworkApp</string>
     <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_like">Like</string>
+    <string name="button_like_text">Like</string>
+    <string name="description_post_share">Share</string>
+    <string name="button_share_text">Share</string>
+    <string name="description_post_send">Send</string>
+    <string name="button_send_text">Send</string>
 </resources>
