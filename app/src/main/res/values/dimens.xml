@@ -7,4 +7,8 @@
     <dimen name="icon_button_min_size">48dp</dimen>
     <dimen name="icon_button_padding">12dp</dimen>
     <dimen name="reaction_buttons_text_size">13sp</dimen>
+    <dimen name="separator_height">1dp</dimen>
+    <dimen name="likes_count_image_width">16dp</dimen>
+    <dimen name="likes_count_image_height">16dp</dimen>
+    <dimen name="extra_small_spacing">4dp</dimen>
 </resources>
