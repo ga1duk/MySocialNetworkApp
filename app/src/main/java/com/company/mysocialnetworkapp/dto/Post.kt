@@ -8,14 +8,14 @@ data class Post(
     val authorJob: String? = null,
     val content: String,
     val published: String,
-    val coords: Coordinates? = null,
+//    val coords: Coordinates? = null,
     val link: String? = null,
-    val likeOwnerIds: List<Int> = emptyList(),
-    val mentionIds: List<Int> = emptyList(),
+//    val likeOwnerIds: List<Int> = emptyList(),
+//    val mentionIds: List<Int> = emptyList(),
     val likedByMe: Boolean,
     val attachment: Attachment? = null,
     val ownedByMe: Boolean,
-    val users: UserPreview
+//    val users: UserPreview
 )
 
 data class Coordinates(

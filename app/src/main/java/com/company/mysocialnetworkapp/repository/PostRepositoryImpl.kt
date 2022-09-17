@@ -1,6 +1,8 @@
 package com.company.mysocialnetworkapp.repository
 
 import com.company.mysocialnetworkapp.api.PostsApiService
+import com.company.mysocialnetworkapp.database.dao.PostDao
+import com.company.mysocialnetworkapp.database.entity.toEntity
 import com.company.mysocialnetworkapp.dto.Post
 import ru.netology.nmedia.error.ApiError
 import ru.netology.nmedia.error.NetworkError
@@ -10,7 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PostRepositoryImpl @Inject constructor(private val apiService: PostsApiService) :
+class PostRepositoryImpl @Inject constructor(
+    private val apiService: PostsApiService,
+    private val dao: PostDao
+) :
     PostRepository {
 
     override suspend fun getAll(): List<Post> {
@@ -19,7 +24,9 @@ class PostRepositoryImpl @Inject constructor(private val apiService: PostsApiSer
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-            return response.body() ?: throw ApiError(response.code(), response.message())
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(body.toEntity())
+            return body
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
