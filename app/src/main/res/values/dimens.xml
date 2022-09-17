@@ -11,4 +11,6 @@
     <dimen name="likes_count_image_width">16dp</dimen>
     <dimen name="likes_count_image_height">16dp</dimen>
     <dimen name="extra_small_spacing">4dp</dimen>
+    <dimen name="author_textsize">17sp</dimen>
+    <dimen name="context_textsize">16sp</dimen>
 </resources>

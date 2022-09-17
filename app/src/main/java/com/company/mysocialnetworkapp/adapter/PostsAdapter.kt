@@ -2,6 +2,7 @@ package com.company.mysocialnetworkapp.adapter
 
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
@@ -31,30 +32,42 @@ class PostsViewHolder(private val binding: CardPostBinding) :
     RecyclerView.ViewHolder(binding.root) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun bind(post: Post) {
-        if (post.authorAvatar == null) {
-            ImageLoader.loadRoundedImage(
-                view = binding.ivPostAvatar,
-                resId = R.drawable.default_avatar
-            )
-        } else {
-            ImageLoader.loadRoundedImage(view = binding.ivPostAvatar, path = post.authorAvatar)
-        }
-
-        binding.tvAuthor.text = post.author
-
-        val postPublishDate = post.published
-        val odt = OffsetDateTime.parse(postPublishDate)
-        val postPublishDateFormatted = odt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
-        binding.tvPublished.text = postPublishDateFormatted
-
-        binding.tvContent.text = post.content
-
-        if (post.attachment != null) {
-            if (post.attachment.type == AttachmentType.IMAGE) {
-                ImageLoader.loadImage(view = binding.ivAttachment, path = post.attachment.url)
+        with(binding) {
+            if (post.authorAvatar == null) {
+                ImageLoader.loadRoundedImage(
+                    view = binding.ivPostAvatar,
+                    resId = R.drawable.default_avatar
+                )
+            } else {
+                ImageLoader.loadRoundedImage(view = binding.ivPostAvatar, path = post.authorAvatar)
             }
-        } else {
-            ImageLoader.loadImage(view = binding.ivAttachment, path = "")
+
+            tvAuthor.text = post.author
+
+            val postPublishDate = post.published
+            val odt = OffsetDateTime.parse(postPublishDate)
+            val postPublishDateFormatted =
+                odt.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))
+            tvPublished.text = postPublishDateFormatted
+
+            if (post.link != null) {
+                tvContent.text = root.resources.getString(
+                    R.string.post_content_and_link_text,
+                    post.content,
+                    post.link
+                )
+            } else {
+                tvContent.text = post.content
+            }
+
+            if (post.attachment != null) {
+                if (post.attachment.type == AttachmentType.IMAGE) {
+                    ivAttachment.visibility = View.VISIBLE
+                    ImageLoader.loadImage(view = ivAttachment, path = post.attachment.url)
+                }
+            } else {
+                ivAttachment.visibility = View.GONE
+            }
         }
     }
 }
