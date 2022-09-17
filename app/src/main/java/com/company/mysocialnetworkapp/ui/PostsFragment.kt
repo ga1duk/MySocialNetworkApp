@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.company.mysocialnetworkapp.R
 import com.company.mysocialnetworkapp.adapter.OnInteractionListener
@@ -13,15 +14,20 @@ import com.company.mysocialnetworkapp.adapter.PostsAdapter
 import com.company.mysocialnetworkapp.api.PostsApiService
 import com.company.mysocialnetworkapp.databinding.FragmentPostsBinding
 import com.company.mysocialnetworkapp.dto.Post
+import com.company.mysocialnetworkapp.viewmodel.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @AndroidEntryPoint
 class PostsFragment : Fragment() {
 
     @Inject
     lateinit var apiService: PostsApiService
+
+    private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,14 +55,8 @@ class PostsFragment : Fragment() {
         })
         binding.rvPosts.adapter = adapter
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val response = apiService.getPosts()
-            if (!response.isSuccessful) {
-                throw Error("kdfkjlds")
-            } else {
-                val body = response.body()
-                adapter.submitList(body)
-            }
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
+            adapter.submitList(posts)
         }
 
         return binding.root
