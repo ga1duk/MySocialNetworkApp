@@ -16,10 +16,14 @@ import com.company.mysocialnetworkapp.util.ImageLoader
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
-class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
+interface OnInteractionListener {
+    fun onSend(post: Post) {}
+}
+
+class PostsAdapter(private val listener: OnInteractionListener) : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostsViewHolder(binding)
+        return PostsViewHolder(binding, listener)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -28,7 +32,7 @@ class PostsAdapter : ListAdapter<Post, PostsViewHolder>(PostDiffCallback()) {
     }
 }
 
-class PostsViewHolder(private val binding: CardPostBinding) :
+class PostsViewHolder(private val binding: CardPostBinding, private val listener: OnInteractionListener) :
     RecyclerView.ViewHolder(binding.root) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun bind(post: Post) {
@@ -67,6 +71,11 @@ class PostsViewHolder(private val binding: CardPostBinding) :
                 }
             } else {
                 ivAttachment.visibility = View.GONE
+            }
+
+            btnSend.setOnClickListener {
+                listener.onSend(post)
+                btnSend.isChecked = false
             }
         }
     }

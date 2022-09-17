@@ -8,4 +8,5 @@
     <string name="button_share_text">Поделиться</string>
     <string name="description_post_send">Отправить</string>
     <string name="button_send_text">Отправить</string>
+    <string name="chooser_send_post">Отправить пост</string>
 </resources>
