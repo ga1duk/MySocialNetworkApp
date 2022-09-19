@@ -9,4 +9,9 @@
     <string name="button_send_text">Send</string>
     <string name="post_content_and_link_text" translatable="false">%1$s %2$s</string>
     <string name="chooser_send_post">Send post</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_out">Sign out</string>
+    <string name="hint_type_login">Type login</string>
+    <string name="hint_type_password">Type password</string>
 </resources>

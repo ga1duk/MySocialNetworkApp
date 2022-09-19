@@ -7,5 +7,16 @@
     <fragment
         android:id="@+id/postsFragment"
         android:name="com.company.mysocialnetworkapp.ui.PostsFragment"
-        android:label="PostsFragment" />
+        android:label="PostsFragment" >
+        <action
+            android:id="@+id/action_postsFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.company.mysocialnetworkapp.ui.SignInFragment"
+        android:label="SignInFragment" />
+    <action
+        android:id="@+id/action_global_signInFragment"
+        app:destination="@id/signInFragment" />
 </navigation>

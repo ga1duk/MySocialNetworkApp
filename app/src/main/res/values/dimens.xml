@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="extra_small_spacing">4dp</dimen>
     <dimen name="small_spacing">8dp</dimen>
     <dimen name="common_spacing">16dp</dimen>
+    <dimen name="large_spacing">24dp</dimen>
     <dimen name="extra_large_spacing">48dp</dimen>
     <dimen name="post_avatar_size">48dp</dimen>
     <dimen name="icon_button_min_size">48dp</dimen>
@@ -10,7 +12,6 @@
     <dimen name="separator_height">1dp</dimen>
     <dimen name="likes_count_image_width">16dp</dimen>
     <dimen name="likes_count_image_height">16dp</dimen>
-    <dimen name="extra_small_spacing">4dp</dimen>
     <dimen name="author_textsize">17sp</dimen>
     <dimen name="context_textsize">16sp</dimen>
 </resources>
