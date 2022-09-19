@@ -12,6 +12,8 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_out">Sign out</string>
+    <string name="hint_type_user_name">Type user name</string>
     <string name="hint_type_login">Type login</string>
     <string name="hint_type_password">Type password</string>
+    <string name="hint_confirm_password">Confirm password</string>
 </resources>

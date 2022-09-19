@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/postsFragment"
         android:name="com.company.mysocialnetworkapp.ui.PostsFragment"
-        android:label="PostsFragment" >
+        android:label="PostsFragment">
         <action
             android:id="@+id/action_postsFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
@@ -19,4 +19,11 @@
     <action
         android:id="@+id/action_global_signInFragment"
         app:destination="@id/signInFragment" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.company.mysocialnetworkapp.ui.SignUpFragment"
+        android:label="SignUpFragment" />
+    <action
+        android:id="@+id/action_global_signUpFragment"
+        app:destination="@id/signUpFragment" />
 </navigation>

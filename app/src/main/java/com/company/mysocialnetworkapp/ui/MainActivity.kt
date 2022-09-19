@@ -39,11 +39,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     .navigate(R.id.action_global_signInFragment)
                 true
             }
-//            R.id.signup -> {
-//                findNavController(R.id.nav_host_fragment)
-//                    .navigate(R.id.action)
-//                true
-//            }
+            R.id.signup -> {
+                findNavController(R.id.nav_host_fragment)
+                    .navigate(R.id.action_global_signUpFragment)
+                true
+            }
 //            R.id.signout -> {
 //                when (findNavController(R.id.nav_host_fragment).currentDestination?.id) {
 //                    R.id.NewPostFragment -> exitDialogFragment.show(manager, "myDialog")
