@@ -2,6 +2,7 @@ package com.company.mysocialnetworkapp.di
 
 import com.company.mysocialnetworkapp.BuildConfig
 import com.company.mysocialnetworkapp.api.PostsApiService
+import com.company.mysocialnetworkapp.repository.TokenRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,8 +33,20 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp(logging: Interceptor) = OkHttpClient.Builder()
+    fun provideOkHttp(
+        logging: Interceptor,
+        tokenRepository: TokenRepository
+    ) = OkHttpClient.Builder()
         .addInterceptor(logging)
+        .addInterceptor { chain ->
+            tokenRepository.token?.let { token ->
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", token)
+                    .build()
+                return@addInterceptor chain.proceed(newRequest)
+            }
+            chain.proceed(chain.request())
+        }
         .build()
 
     @Provides

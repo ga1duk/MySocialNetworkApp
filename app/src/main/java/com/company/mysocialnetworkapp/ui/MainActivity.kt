@@ -6,29 +6,39 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import com.company.mysocialnetworkapp.R
+import com.company.mysocialnetworkapp.ui.dialog.ExitDialogFragment
+import com.company.mysocialnetworkapp.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-//    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: AuthViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-//        viewModel.data.observe(this) {
+    private lateinit var exitDialogFragment: ExitDialogFragment
+    private lateinit var manager: FragmentManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        exitDialogFragment = ExitDialogFragment()
+        manager = supportFragmentManager
+
+        viewModel.data.observe(this) {
             invalidateOptionsMenu()
-//        }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_auth, menu)
 
-//        menu.let {
-//            it.setGroupVisible(R.id.unauthenticated, !viewModel.authenticated)
-//            it.setGroupVisible(R.id.authenticated, viewModel.authenticated)
-//        }
+        menu.let {
+            it.setGroupVisible(R.id.unauthenticated, !viewModel.authenticated)
+            it.setGroupVisible(R.id.authenticated, viewModel.authenticated)
+        }
         return true
     }
 
@@ -44,13 +54,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     .navigate(R.id.action_global_signUpFragment)
                 true
             }
-//            R.id.signout -> {
-//                when (findNavController(R.id.nav_host_fragment).currentDestination?.id) {
-//                    R.id.NewPostFragment -> exitDialogFragment.show(manager, "myDialog")
-//                    else -> appAuth.removeAuth()
-//                }
-//                true
-//            }
+            R.id.signout -> {
+                exitDialogFragment.show(manager, "myDialog")
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
