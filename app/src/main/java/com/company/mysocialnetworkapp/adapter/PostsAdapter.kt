@@ -17,6 +17,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 
 interface OnInteractionListener {
+    fun onLike(post: Post) {}
     fun onSend(post: Post) {}
 }
 
@@ -37,6 +38,8 @@ class PostsViewHolder(private val binding: CardPostBinding, private val listener
     @RequiresApi(Build.VERSION_CODES.O)
     fun bind(post: Post) {
         with(binding) {
+            btnLike.isChecked = post.likedByMe
+
             if (post.authorAvatar == null) {
                 ImageLoader.loadRoundedImage(
                     view = binding.ivPostAvatar,
@@ -71,6 +74,10 @@ class PostsViewHolder(private val binding: CardPostBinding, private val listener
                 }
             } else {
                 ivAttachment.visibility = View.GONE
+            }
+
+            btnLike.setOnClickListener {
+                listener.onLike(post)
             }
 
             btnSend.setOnClickListener {

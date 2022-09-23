@@ -43,6 +43,7 @@ class ApiModule {
                 val newRequest = chain.request().newBuilder()
                     .addHeader("Authorization", token)
                     .build()
+                println(token)
                 return@addInterceptor chain.proceed(newRequest)
             }
             chain.proceed(chain.request())

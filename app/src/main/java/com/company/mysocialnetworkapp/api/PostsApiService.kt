@@ -3,14 +3,17 @@ package com.company.mysocialnetworkapp.api
 import com.company.mysocialnetworkapp.dto.Post
 import com.company.mysocialnetworkapp.dto.User
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface PostsApiService {
     @GET("posts")
     suspend fun getPosts(): Response<List<Post>>
+
+    @POST("posts/{post_id}/likes")
+    suspend fun likePostById(@Path("post_id") id: Long): Response<Post>
+
+    @DELETE("posts/{post_id}/likes")
+    suspend fun dislikePostById(@Path("post_id") id: Long): Response<Post>
 
     @FormUrlEncoded
     @POST("users/authentication")

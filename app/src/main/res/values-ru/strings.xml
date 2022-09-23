@@ -32,4 +32,9 @@
     <string name="error_passwords_must_match">Пароли должны совпадать</string>
     <string name="error_server_internal">Внутренняя ошибка сервера</string>
     <string name="toast_text_successful_register">Успешная регистрация</string>
+
+    <string name="sign_in_dialog_positive_button_text">Да</string>
+    <string name="sign_in_dialog_negative_button_text">Нет</string>
+    <string name="dialog_title_sign_in">Данное действие доступно только для авторизованных пользователей</string>
+    <string name="sign_in_message_are_you_sure">Войти в свой аккаунт?</string>
 </resources>

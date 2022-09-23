@@ -1,11 +1,10 @@
 package com.company.mysocialnetworkapp.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.company.mysocialnetworkapp.auth.AppAuth
 import com.company.mysocialnetworkapp.dto.Post
 import com.company.mysocialnetworkapp.repository.PostRepository
+import com.company.mysocialnetworkapp.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -13,11 +12,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 @ExperimentalCoroutinesApi
-class PostViewModel @Inject constructor(private val repository: PostRepository) : ViewModel() {
+class PostViewModel @Inject constructor(
+    private val repository: PostRepository,
+    private val appAuth: AppAuth
+) : ViewModel() {
 
-    val _data = MutableLiveData<List<Post>>()
+    private val _data = MutableLiveData<List<Post>>()
     val data: LiveData<List<Post>>
         get() = _data
+
+    private val _isUserAuthorized = SingleLiveEvent<Boolean>()
+    val isUserAuthorized: LiveData<Boolean>
+        get() = _isUserAuthorized
 
     init {
         getPosts()
@@ -31,5 +37,29 @@ class PostViewModel @Inject constructor(private val repository: PostRepository) 
                 TODO()
             }
         }
+    }
+
+    fun likePostById(id: Long) = viewModelScope.launch {
+        try {
+            repository.likePostById(id)
+            getPosts()
+        } catch (e: Exception) {
+            TODO()
+        }
+    }
+
+    fun dislikePostById(id: Long) = viewModelScope.launch {
+        try {
+            repository.dislikePostById(id)
+            getPosts()
+        } catch (e: Exception) {
+            TODO()
+        }
+    }
+
+    fun checkForUsersAuthentication(): Boolean {
+        _isUserAuthorized.value = !(appAuth.authStateFlow.value.id == 0L
+                || appAuth.authStateFlow.value.token == null)
+        return _isUserAuthorized.value ?: false
     }
 }
